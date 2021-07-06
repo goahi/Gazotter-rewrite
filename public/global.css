@@ -14,6 +14,9 @@ blockquote,
 dl,
 dd {
     margin: 0;
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "BIZ UDPGothic", "BIZ UDPゴシック", "Noto Sans JP", "Noto Sans CJK JP",
+        "Hiragino Sans", "Yu Gothic", sans-serif;
 }
 ul[role="list"],
 ol[role="list"] {
