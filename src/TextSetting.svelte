@@ -14,7 +14,7 @@
     <div>
         フォントサイズ
         <input
-            class="font_size"
+            class="inputbox_num"
             type="number"
             min="1"
             max="160"
@@ -28,7 +28,7 @@
         display: flex;
     }
 
-    .font_size {
+    .inputbox_num {
         font-size: 1.25em;
         height: 1.5em;
         width: 6ch;
