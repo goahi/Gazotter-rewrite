@@ -31,7 +31,6 @@
     function write(_ctx) {
         _ctx.clearRect(0, 0, canvas_width, canvas_height);
 
-        console.log(linespacing);
         input.forEach((paragraph, order) => {
             _ctx.fillText(
                 paragraph,
