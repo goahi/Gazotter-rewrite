@@ -11,8 +11,6 @@
     let dataURL;
 
     let target;
-    let r_height;
-    let r_width;
 
     if (c) {
         ctx = c.getContext("2d");
