@@ -22,27 +22,58 @@
 
 <style>
     main {
-        display: flex;
-
-        justify-content: space-around;
         margin-top: 3rem;
+        min-height: calc(100vh - 3rem);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
     }
 
     .input_area {
         display: flex;
-        width: 45vw;
-        padding-top: 1rem;
         flex-direction: column;
         align-items: center;
     }
 
     textarea {
-        width: 100%;
-        height: 120px;
-        resize: vertical;
+        resize: none;
     }
 
-    .preview {
-        width: 45vw;
+    @media screen and (min-width: 600px) {
+        main {
+            flex-direction: row;
+        }
+        .input_area {
+            width: 40vw;
+            height: calc(90vh - 3rem);
+        }
+        textarea {
+            width: 100%;
+            height: 100%;
+        }
+
+        .preview {
+            width: 40vw;
+            height: calc(90vh - 3rem);
+        }
+    }
+    @media screen and (max-width: 599px) {
+        main {
+            flex-direction: column;
+        }
+        .input_area {
+            width: 90vw;
+            height: 40vh;
+        }
+        textarea {
+            width: 100%;
+            height: 100%;
+        }
+
+        .preview {
+            width: 90vw;
+            height: 40vh;
+        }
     }
 </style>
