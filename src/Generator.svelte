@@ -3,6 +3,7 @@
 
     export let input;
     export let fontsize = 8;
+    export let linespacing = 1.1;
 
     let c;
     let dummy;
@@ -30,8 +31,13 @@
     function write(_ctx) {
         _ctx.clearRect(0, 0, canvas_width, canvas_height);
 
+        console.log(linespacing);
         input.forEach((paragraph, order) => {
-            _ctx.fillText(paragraph, 10, order * text_size.height);
+            _ctx.fillText(
+                paragraph,
+                10,
+                order * text_size.height * linespacing
+            );
         });
         dataURL = c.toDataURL();
     }
@@ -46,6 +52,7 @@
 
     $: if (c) {
         input = input;
+        linespacing = linespacing;
         let ctx = c.getContext("2d");
 
         ctx.font = `${fontsize}px sans-serif`;
