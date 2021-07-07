@@ -1,5 +1,6 @@
 <script>
     import Header from "./Header.svelte";
+    import Generator from "./Generator.svelte";
 
     let input_text = "";
     let input_html;
@@ -13,10 +14,7 @@
         <textarea bind:value={input_text} autocomplete="off" />
     </section>
     <section class="preview">
-        {#each input_html as paragraph}
-            {paragraph}
-            <br />
-        {/each}
+        <Generator input={input_html} />
     </section>
 </main>
 
