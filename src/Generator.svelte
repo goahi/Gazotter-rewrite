@@ -1,5 +1,7 @@
 <script>
     export let input;
+    export let fontsize = 8;
+
     let c;
     let ctx;
 
@@ -12,6 +14,9 @@
         ctx = c.getContext("2d");
 
         ctx.clearRect(0, 0, canvas_width, canvas_height);
+        ctx.textBaseline = "top";
+        ctx.font = `${fontsize}px sans-serif`;
+
         input.forEach((paragraph, order) => {
             ctx.fillText(paragraph, 10, (order + 1) * 50);
         });

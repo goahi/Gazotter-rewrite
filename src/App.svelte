@@ -1,20 +1,28 @@
 <script>
     import Header from "./Header.svelte";
     import Generator from "./Generator.svelte";
+    import TextSetting from "./TextSetting.svelte";
+
+    let textsetting;
 
     let input_text = "";
     let input_html;
     $: input_html = input_text.split("\n");
+
+    function get_textsetting(event) {
+        textsetting = event.detail;
+    }
 </script>
 
 <Header />
 
 <main>
     <section class="input_area">
+        <TextSetting on:text_setting={get_textsetting} />
         <textarea bind:value={input_text} autocomplete="off" />
     </section>
     <section class="preview">
-        <Generator input={input_html} />
+        <Generator input={input_html} {...textsetting} />
     </section>
 </main>
 
