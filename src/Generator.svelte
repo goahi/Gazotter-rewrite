@@ -5,50 +5,52 @@
     export let fontsize = 8;
 
     let c;
-    let ctx;
+    let dummy;
 
     let canvas_width = 600;
     let canvas_height = 600;
 
+    let text_size;
+
     let dataURL;
 
-    let target;
-
     function measure(target_letters, font_family, font_size) {
-        target.style.fontFamily = font_family;
-        target.style.fontSize = `${font_size}px`;
+        let dummy_ctx = dummy.getContext("2d");
+        dummy_ctx.font = `${font_size}px ${font_family}`;
+        const metrics = dummy_ctx.measureText(target_letters);
 
-        target.textContent = target_letters;
-
-        return { height: target.offsetHeight, width: target.offsetWidth };
+        return {
+            height:
+                metrics.actualBoundingBoxAscent +
+                metrics.actualBoundingBoxDescent,
+            width: metrics.width,
+        };
     }
 
-    function write(ctx) {
-        ctx.clearRect(0, 0, canvas_width, canvas_height);
-
-        const text_size = measure(input[0].charAt(0), "sans-serif", fontsize);
+    function write(_ctx) {
+        _ctx.clearRect(0, 0, canvas_width, canvas_height);
 
         input.forEach((paragraph, order) => {
-            ctx.fillText(paragraph, 10, order * text_size.height);
+            _ctx.fillText(paragraph, 10, order * text_size.height);
         });
         dataURL = c.toDataURL();
     }
 
     onMount(() => {
-        ctx = c.getContext("2d");
+        let ctx = c.getContext("2d");
 
         ctx.textBaseline = "top";
+        ctx.font = `${fontsize}px sans-serif`;
+        text_size = measure("あ", "sans-serif", fontsize);
     });
 
     $: if (c) {
         input = input;
-        write(c.getContext("2d"));
-    }
-
-    $: if (c) {
-        ctx = c.getContext("2d");
+        let ctx = c.getContext("2d");
 
         ctx.font = `${fontsize}px sans-serif`;
+        text_size = measure("あ", "sans-serif", fontsize);
+
         write(ctx);
     }
 </script>
@@ -56,17 +58,10 @@
 <img src={dataURL} alt={input.join("")} />
 <canvas bind:this={c} height={canvas_height} width={canvas_width} />
 
-<span id="ruler" bind:this={target} />
+<canvas bind:this={dummy} height={0} width={0} />
 
 <style>
     canvas {
         display: none;
-    }
-
-    #ruler {
-        white-space: nowrap;
-        visibility: hidden;
-        overflow: hidden;
-        display: inline;
     }
 </style>
