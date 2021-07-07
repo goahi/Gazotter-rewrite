@@ -1,4 +1,6 @@
 <script>
+    import { onMount } from "svelte";
+
     export let input;
     export let fontsize = 8;
 
@@ -12,26 +14,17 @@
 
     let target;
 
-    if (c) {
-        ctx = c.getContext("2d");
+    function measure(target_letters, font_family, font_size) {
+        target.style.fontFamily = font_family;
+        target.style.fontSize = `${font_size}px`;
 
-        ctx.textBaseline = "top";
+        target.textContent = target_letters;
+
+        return { height: target.offsetHeight, width: target.offsetWidth };
     }
 
-    $: if (c) {
-        function measure(target_letters, font_family, font_size) {
-            target.style.fontFamily = font_family;
-            target.style.fontSize = `${font_size}px`;
-
-            target.textContent = target_letters;
-
-            return { height: target.offsetHeight, width: target.offsetWidth };
-        }
-
-        ctx = c.getContext("2d");
-
+    function write(ctx) {
         ctx.clearRect(0, 0, canvas_width, canvas_height);
-        ctx.font = `${fontsize}px sans-serif`;
 
         const text_size = measure(input[0].charAt(0), "sans-serif", fontsize);
 
@@ -39,6 +32,24 @@
             ctx.fillText(paragraph, 10, (order + 1) * text_size.height);
         });
         dataURL = c.toDataURL();
+    }
+
+    onMount(() => {
+        ctx = c.getContext("2d");
+
+        ctx.textBaseline = "top";
+    });
+
+    $: if (c) {
+        input = input;
+        write(c.getContext("2d"));
+    }
+
+    $: if (c) {
+        ctx = c.getContext("2d");
+
+        ctx.font = `${fontsize}px sans-serif`;
+        write(ctx);
     }
 </script>
 
