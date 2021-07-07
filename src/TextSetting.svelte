@@ -13,7 +13,13 @@
 <section class="text_setting">
     <div>
         フォントサイズ
-        <input class="font_size" type="number" min="1" bind:value={font_size} />
+        <input
+            class="font_size"
+            type="number"
+            min="1"
+            max="160"
+            bind:value={font_size}
+        />
     </div>
 </section>
 

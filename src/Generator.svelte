@@ -33,10 +33,10 @@
         ctx.clearRect(0, 0, canvas_width, canvas_height);
         ctx.font = `${fontsize}px sans-serif`;
 
-        const text_height = measure(input[0], "sans-serif", fontsize).height;
+        const text_size = measure(input[0].charAt(0), "sans-serif", fontsize);
 
         input.forEach((paragraph, order) => {
-            ctx.fillText(paragraph, 10, (order + 1) * text_height);
+            ctx.fillText(paragraph, 10, (order + 1) * text_size.height);
         });
         dataURL = c.toDataURL();
     }
@@ -55,5 +55,7 @@
     #ruler {
         white-space: nowrap;
         visibility: hidden;
+        overflow: hidden;
+        display: inline;
     }
 </style>
