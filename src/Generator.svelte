@@ -29,7 +29,7 @@
         const text_size = measure(input[0].charAt(0), "sans-serif", fontsize);
 
         input.forEach((paragraph, order) => {
-            ctx.fillText(paragraph, 10, (order + 1) * text_size.height);
+            ctx.fillText(paragraph, 10, order * text_size.height);
         });
         dataURL = c.toDataURL();
     }
