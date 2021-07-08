@@ -11,6 +11,11 @@
     let canvas_width = 600;
     let canvas_height = 600;
 
+    let margin = 30;
+
+    let actual_height = canvas_width - margin / 2;
+    let actual_width = canvas_width - margin / 2;
+
     let text_size;
 
     let dataURL;
@@ -28,14 +33,39 @@
         };
     }
 
+    function lineWrap(input_paragraphs) {
+        let line_wrapped = [];
+        input_paragraphs.forEach((paragraph, order) => {
+            let kari = paragraph;
+
+            while (actual_width <= measure(kari).width) {
+                let letter_count = 1;
+
+                while (
+                    actual_width > measure(kari.slice(0, letter_count)).width
+                ) {
+                    letter_count += 1;
+                }
+                letter_count -= 1;
+
+                line_wrapped.push(kari.slice(0, letter_count));
+                kari = kari.slice(letter_count);
+            }
+            line_wrapped.push(kari);
+        });
+        return line_wrapped;
+    }
+
     function write(_ctx) {
         _ctx.clearRect(0, 0, canvas_width, canvas_height);
 
-        input.forEach((paragraph, order) => {
+        let line_wrapped = lineWrap(input);
+
+        line_wrapped.forEach((paragraph, order) => {
             _ctx.fillText(
                 paragraph,
-                10,
-                order * text_size.height * linespacing
+                margin / 2,
+                order * text_size.height * linespacing + margin / 2
             );
         });
         dataURL = c.toDataURL();
