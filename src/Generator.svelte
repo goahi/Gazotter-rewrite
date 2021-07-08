@@ -50,8 +50,6 @@
                 while (actual_width > getWidth(kari.slice(0, letter_count))) {
                     letter_count += 1;
                 }
-                console.log(kari.slice(0, letter_count));
-                console.log(kari.slice(letter_count - 1, letter_count));
                 if (
                     jahyphenation === true &&
                     "、。，．,.".indexOf(
