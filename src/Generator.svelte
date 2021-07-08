@@ -4,6 +4,7 @@
     export let input;
     export let fontsize = 8;
     export let linespacing = 1.1;
+    export let jahyphenation = true;
 
     let c;
     let dummy;
@@ -49,7 +50,17 @@
                 while (actual_width > getWidth(kari.slice(0, letter_count))) {
                     letter_count += 1;
                 }
-                letter_count -= 1;
+                console.log(kari.slice(0, letter_count));
+                console.log(kari.slice(letter_count - 1, letter_count));
+                if (
+                    jahyphenation === true &&
+                    "、。，．,.".indexOf(
+                        kari.slice(letter_count - 1, letter_count)
+                    ) !== -1
+                ) {
+                } else {
+                    letter_count -= 1;
+                }
 
                 line_wrapped.push(kari.slice(0, letter_count));
                 kari = kari.slice(letter_count);
@@ -85,6 +96,8 @@
     $: if (c) {
         input = input;
         linespacing = linespacing;
+        jahyphenation = jahyphenation;
+
         let ctx = c.getContext("2d");
 
         ctx.font = `${fontsize}px sans-serif`;
