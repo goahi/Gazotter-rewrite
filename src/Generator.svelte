@@ -20,17 +20,22 @@
 
     let dataURL;
 
-    function measure(target_letters, font_family, font_size) {
+    function getWidth(target_letters, font_family, font_size) {
         let dummy_ctx = dummy.getContext("2d");
         dummy_ctx.font = `${font_size}px ${font_family}`;
         const metrics = dummy_ctx.measureText(target_letters);
 
-        return {
-            height:
-                metrics.actualBoundingBoxAscent +
-                metrics.actualBoundingBoxDescent,
-            width: metrics.width,
-        };
+        return metrics.width;
+    }
+
+    function getHeight(target_letters, font_family, font_size) {
+        let dummy_ctx = dummy.getContext("2d");
+        dummy_ctx.font = `${font_size}px ${font_family}`;
+        const metrics = dummy_ctx.measureText(target_letters);
+
+        return (
+            metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent
+        );
     }
 
     function lineWrap(input_paragraphs) {
@@ -38,12 +43,10 @@
         input_paragraphs.forEach((paragraph, order) => {
             let kari = paragraph;
 
-            while (actual_width <= measure(kari).width) {
+            while (actual_width <= getWidth(kari)) {
                 let letter_count = 1;
 
-                while (
-                    actual_width > measure(kari.slice(0, letter_count)).width
-                ) {
+                while (actual_width > getWidth(kari.slice(0, letter_count))) {
                     letter_count += 1;
                 }
                 letter_count -= 1;
@@ -65,7 +68,7 @@
             _ctx.fillText(
                 paragraph,
                 margin / 2,
-                order * text_size.height * linespacing + margin / 2
+                order * text_size * linespacing + margin / 2
             );
         });
         dataURL = c.toDataURL();
@@ -76,7 +79,7 @@
 
         ctx.textBaseline = "top";
         ctx.font = `${fontsize}px sans-serif`;
-        text_size = measure("あ", "sans-serif", fontsize);
+        text_size = getHeight("あ", "sans-serif", fontsize);
     });
 
     $: if (c) {
@@ -85,7 +88,7 @@
         let ctx = c.getContext("2d");
 
         ctx.font = `${fontsize}px sans-serif`;
-        text_size = measure("あ", "sans-serif", fontsize);
+        text_size = getHeight("あ", "sans-serif", fontsize);
 
         write(ctx);
     }
