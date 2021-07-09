@@ -5,6 +5,10 @@
     let line_spacing = 1.1;
     let ja_hyphenation = true;
 
+    function showDetail() {
+        //後で書く
+    }
+
     const dispatch = createEventDispatcher();
 
     dispatch("text_setting", {
@@ -30,6 +34,8 @@
             max="160"
             bind:value={font_size}
         />
+    </div>
+    <div>
         行間
         <input
             class="inputbox_num"
@@ -39,6 +45,8 @@
             step="0.1"
             bind:value={line_spacing}
         />
+    </div>
+    <div>
         日本語の禁則処理
         <input
             class="inputbox_check"
@@ -51,6 +59,9 @@
 <style>
     .text_setting {
         display: flex;
+        flex-direction: row;
+        flex-wrap: wrap-reverse;
+        width: 100%;
     }
 
     .inputbox_num {
