@@ -19,7 +19,7 @@
 
     let text_size;
 
-    let dataURL;
+    var image;
 
     function getWidth(target_letters, font_family, font_size) {
         let dummy_ctx = dummy.getContext("2d");
@@ -80,7 +80,14 @@
                 order * text_size * linespacing + margin / 2
             );
         });
-        dataURL = c.toDataURL();
+
+        const old_img = image;
+
+        c.toBlob((blob) => {
+            image = URL.createObjectURL(blob);
+        });
+
+        URL.revokeObjectURL(old_img);
     }
 
     onMount(() => {
@@ -105,7 +112,7 @@
     }
 </script>
 
-<img src={dataURL} alt={input.join("")} />
+<img src={image} alt={input.join("")} />
 <canvas bind:this={c} height={canvas_height} width={canvas_width} />
 
 <canvas bind:this={dummy} height={0} width={0} />
