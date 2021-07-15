@@ -26,7 +26,7 @@
 
 <section class="text_setting">
     <div>
-        フォントサイズ
+        フォントサイズ(pt)
         <input
             class="inputbox_num"
             type="number"

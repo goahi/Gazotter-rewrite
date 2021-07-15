@@ -94,8 +94,8 @@
         let ctx = c.getContext("2d");
 
         ctx.textBaseline = "top";
-        ctx.font = `${fontsize}px sans-serif`;
-        text_size = getHeight("あ", "sans-serif", fontsize);
+        ctx.font = `${(fontsize * 96) / 72}px sans-serif`;
+        text_size = getHeight("あ", "sans-serif", (fontsize * 96) / 72);
     });
 
     $: if (c) {
@@ -105,8 +105,8 @@
 
         let ctx = c.getContext("2d");
 
-        ctx.font = `${fontsize}px sans-serif`;
-        text_size = getHeight("あ", "sans-serif", fontsize);
+        ctx.font = `${(fontsize * 96) / 72}px sans-serif`;
+        text_size = getHeight("あ", "sans-serif", (fontsize * 96) / 72);
 
         write(ctx);
     }
