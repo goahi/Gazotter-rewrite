@@ -14,8 +14,8 @@
 
     let margin = 30;
 
-    let actual_height = canvas_width - margin / 2;
-    let actual_width = canvas_width - margin / 2;
+    let actual_height = canvas_width - margin;
+    let actual_width = canvas_width - margin;
 
     let text_size;
 
