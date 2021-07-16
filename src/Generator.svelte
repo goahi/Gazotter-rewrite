@@ -68,11 +68,44 @@
         return line_wrapped;
     }
 
+    function roundedRect(_ctx, x, y, width, height, radius) {
+        //This function is from MDN. It is released under the CC0.
+        //https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes
+        _ctx.beginPath();
+        _ctx.moveTo(x, y + radius);
+        _ctx.lineTo(x, y + height - radius);
+        _ctx.arcTo(x, y + height, x + radius, y + height, radius);
+        _ctx.lineTo(x + width - radius, y + height);
+        _ctx.arcTo(
+            x + width,
+            y + height,
+            x + width,
+            y + height - radius,
+            radius
+        );
+        _ctx.lineTo(x + width, y + radius);
+        _ctx.arcTo(x + width, y, x + width - radius, y, radius);
+        _ctx.lineTo(x + radius, y);
+        _ctx.arcTo(x, y, x, y + radius, radius);
+        _ctx.fill();
+    }
+
     function write(_ctx) {
-        _ctx.clearRect(0, 0, canvas_width, canvas_height);
+        _ctx.fillStyle = "rgb(145, 214, 227)";
+        _ctx.fillRect(0, 0, canvas_width, canvas_height);
+        _ctx.fillStyle = "rgb(239, 252, 255)";
+        roundedRect(
+            _ctx,
+            margin / 2,
+            margin / 2,
+            actual_height,
+            actual_width,
+            10
+        );
 
         let line_wrapped = lineWrap(input);
 
+        _ctx.fillStyle = "rgb(0, 0, 0)";
         line_wrapped.forEach((paragraph, order) => {
             _ctx.fillText(
                 paragraph,
@@ -91,10 +124,10 @@
     }
 
     onMount(() => {
-        let ctx = c.getContext("2d");
+        let _ctx = c.getContext("2d");
 
-        ctx.textBaseline = "top";
-        ctx.font = `${(fontsize * 96) / 72}px sans-serif`;
+        _ctx.textBaseline = "top";
+        _ctx.font = `${(fontsize * 96) / 72}px sans-serif`;
         text_size = getHeight("あ", "sans-serif", (fontsize * 96) / 72);
     });
 
@@ -103,12 +136,12 @@
         linespacing = linespacing;
         jahyphenation = jahyphenation;
 
-        let ctx = c.getContext("2d");
+        let _ctx = c.getContext("2d");
 
-        ctx.font = `${(fontsize * 96) / 72}px sans-serif`;
+        _ctx.font = `${(fontsize * 96) / 72}px sans-serif`;
         text_size = getHeight("あ", "sans-serif", (fontsize * 96) / 72);
 
-        write(ctx);
+        write(_ctx);
     }
 </script>
 
