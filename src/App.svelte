@@ -4,6 +4,7 @@
     import TextSetting from "./TextSetting.svelte";
 
     let textsetting;
+    let autosave_interval = 15;
 
     const stored_text = localStorage.getItem("text");
     let input_text = stored_text === null ? "" : stored_text;
@@ -17,6 +18,10 @@
     window.onbeforeunload = function save_text() {
         localStorage.setItem("text", input_text);
     };
+
+    setInterval(() => {
+        localStorage.setItem("text", input_text);
+    }, autosave_interval * 1000);
 </script>
 
 <Header />
