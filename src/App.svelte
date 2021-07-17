@@ -5,13 +5,18 @@
 
     let textsetting;
 
-    let input_text = "";
+    const stored_text = localStorage.getItem("text");
+    let input_text = stored_text === null ? "" : stored_text;
     let input_html;
     $: input_html = input_text.split("\n");
 
     function get_textsetting(event) {
         textsetting = event.detail;
     }
+
+    window.onbeforeunload = function save_text() {
+        localStorage.setItem("text", input_text);
+    };
 </script>
 
 <Header />
